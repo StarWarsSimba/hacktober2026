@@ -1,0 +1,6 @@
+my-project/
+├── app.py
+├── requirements.txt
+└── static/
+    ├── index.html
+    └── app.js
