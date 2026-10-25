@@ -19,7 +19,11 @@ const dialogueMessages = [
       { text: "Enter the forest", next: 3 }
     ]
   },
-  { text: "The lights lead you toward a distant village.", next: 4 },
+  {
+    text: "The lights lead you toward a distant village.",
+    speaker: "Placeholder",
+    next: 4
+  },
   { text: "The forest path winds deeper into the unknown.", next: 4 },
   { text: "The story continues...", next: 5},
   { text: "... Why are you still here?", next: 6},
@@ -28,6 +32,7 @@ const dialogueMessages = [
   { text: "... I guess you can stay here..."}
 ];
 const keyMessage = document.querySelector("#key-message");
+const speakerName = document.querySelector("#speaker-name");
 const dialogueOptions = document.querySelector("#dialogue-options");
 let currentMessageIndex = 0;
 let messageRevealTimer;
@@ -35,6 +40,8 @@ let isRevealingMessage = false;
 
 function showDialogue() {
   const message = dialogueMessages[currentMessageIndex];
+  speakerName.textContent = message.speaker || "";
+  speakerName.hidden = !message.speaker;
   keyMessage.textContent = "";
   dialogueOptions.replaceChildren();
 
