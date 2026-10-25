@@ -10,24 +10,31 @@
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
-    <!-- Display the page heading. -->
-    <h1>Python + JavaScript</h1>
-    <!-- Label the input where the user types text. -->
-    <label for="text-input">Type something:</label>
-    <!-- Text typed here is mirrored in the output paragraph by app.js. -->
-    <input id="text-input" type="text" autocomplete="off">
-    <!-- Show the current input; announce changes to assistive technology. -->
-    <p id="text-output" aria-live="polite">Your text will appear here.</p>
-    <!-- Show the character speaking the current dialogue line when specified. -->
-    <p id="speaker-name" class="speaker-name" hidden></p>
-    <!-- Show the current dialogue line; press a key to advance. -->
-    <p id="key-message" aria-live="polite"></p>
-    <!-- Dialogue choices appear here when the current line is a question. -->
-    <div id="dialogue-options" class="scene-actions" role="group" aria-label="Dialogue options"></div>
-    <!-- Button to request a greeting from the Flask API. -->
-    <button id="hello-button">Get a message</button>
-    <!-- Display the greeting returned by the API. -->
-    <p id="message"></p>
+    <form id="name-form">
+      <label for="name-input">Your name:</label>
+      <input id="name-input" type="text" autocomplete="name" maxlength="40" required>
+      <button type="submit">Start</button>
+    </form>
+    <main id="story-content" hidden>
+      <!-- Display the page heading. -->
+      <h1>Python + JavaScript</h1>
+      <!-- Label the input where the user types text. -->
+      <label for="text-input">Type something:</label>
+      <!-- Text typed here is mirrored in the output paragraph by app.js. -->
+      <input id="text-input" type="text" autocomplete="off">
+      <!-- Show the current input; announce changes to assistive technology. -->
+      <p id="text-output" aria-live="polite">Your text will appear here.</p>
+      <!-- Show the character speaking the current dialogue line when specified. -->
+      <p id="speaker-name" class="speaker-name" hidden></p>
+      <!-- Show the current dialogue line; press a key to advance. -->
+      <p id="key-message" aria-live="polite"></p>
+      <!-- Dialogue choices appear here when the current line is a question. -->
+      <div id="dialogue-options" class="scene-actions" role="group" aria-label="Dialogue options"></div>
+      <!-- Button to request a greeting from the Flask API. -->
+      <button id="hello-button">Get a message</button>
+      <!-- Display the greeting returned by the API. -->
+      <p id="message"></p>
+    </main>
     <!-- Load the JavaScript that handles typing and button interactions. -->
     <script src="/app.js"></script>
   </body>
