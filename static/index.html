@@ -1,14 +1,29 @@
+<!-- Declare this document as HTML5 and set its language to English. -->
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Use UTF-8 text encoding and fit the page to mobile screen widths. -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Set the title shown in the browser tab. -->
     <title>Python + JavaScript</title>
   </head>
   <body>
+    <!-- Display the page heading. -->
     <h1>Python + JavaScript</h1>
+    <!-- Label the input where the user types text. -->
+    <label for="text-input">Type something:</label>
+    <!-- Text typed here is mirrored in the output paragraph by app.js. -->
+    <input id="text-input" type="text" autocomplete="off">
+    <!-- Show the current input; announce changes to assistive technology. -->
+    <p id="text-output" aria-live="polite">Your text will appear here.</p>
+    <!-- Show which key was most recently pressed. -->
+    <p id="key-message" aria-live="polite"></p>
+    <!-- Button to request a greeting from the Flask API. -->
     <button id="hello-button">Get a message</button>
+    <!-- Display the greeting returned by the API. -->
     <p id="message"></p>
+    <!-- Load the JavaScript that handles typing and button interactions. -->
     <script src="/app.js"></script>
   </body>
 </html>

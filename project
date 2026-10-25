@@ -3,4 +3,9 @@ my-project/
 ├── requirements.txt
 └── static/
     ├── index.html
-    └── app.js
+    ├── app.js
+    ├── styles.css
+    └── assets/
+        ├── backgrounds/
+        ├── characters/
+        └── music/

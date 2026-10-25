@@ -1,0 +1,259 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap");
+
+:root {
+  color-scheme: dark;
+  font-family: "DM Sans", sans-serif;
+  background: #11121b;
+  color: #f6f1eb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  padding: 32px 20px;
+  background:
+    radial-gradient(ellipse at 50% 100%, rgb(100 71 94 / 18%), transparent 50%),
+    #11121b;
+}
+
+button {
+  font: inherit;
+}
+
+.game-shell {
+  width: min(100%, 1024px);
+}
+
+.game-header,
+.game-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.game-header {
+  margin-bottom: 18px;
+}
+
+.game-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #f6f1eb;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.17em;
+  text-decoration: none;
+}
+
+.title-mark {
+  color: #e6b787;
+  font-size: 18px;
+}
+
+.chapter-label,
+.game-footer {
+  color: #a7a3ae;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+.scene {
+  --scene-background: #333;
+  position: relative;
+  min-height: 650px;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 14px;
+  background: #292b3c;
+  box-shadow: 0 28px 90px rgb(0 0 0 / 40%);
+}
+
+.scene-art {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background-image: var(--scene-background);
+  transition: background-image 300ms ease;
+}
+
+.scene::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgb(16 17 27 / 12%) 0%, transparent 45%, rgb(16 17 27 / 70%) 76%),
+    linear-gradient(90deg, rgb(16 17 27 / 16%), transparent 60%);
+  content: "";
+}
+
+.scene-caption {
+  position: absolute;
+  top: 24px;
+  right: 26px;
+  left: 26px;
+  display: flex;
+  justify-content: space-between;
+  color: rgb(255 247 237 / 76%);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-shadow: 0 1px 8px rgb(0 0 0 / 40%);
+}
+
+.dialogue-panel {
+  position: absolute;
+  right: 36px;
+  bottom: 34px;
+  left: 36px;
+  padding: 24px 28px 22px;
+  border: 1px solid rgb(255 255 255 / 15%);
+  border-radius: 10px;
+  background: rgb(21 21 31 / 83%);
+  backdrop-filter: blur(16px);
+}
+
+.speaker-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 30px;
+}
+
+.speaker-icon {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 1px solid rgb(230 183 135 / 50%);
+  border-radius: 50%;
+  color: #e6b787;
+  font-size: 12px;
+}
+
+.speaker-name {
+  margin: 0;
+  color: #e6b787;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dialogue-text {
+  min-height: 56px;
+  margin: 15px 0 22px;
+  color: #f2edf0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(17px, 2.2vw, 22px);
+  line-height: 1.65;
+}
+
+.scene-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.action-button,
+.choice-button {
+  min-height: 42px;
+  padding: 0 17px;
+  border: 1px solid rgb(230 183 135 / 56%);
+  border-radius: 6px;
+  background: #e6b787;
+  color: #211d24;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.choice-button {
+  border-color: rgb(255 255 255 / 23%);
+  background: rgb(255 255 255 / 8%);
+  color: #f6f1eb;
+}
+
+.action-button:hover,
+.choice-button:hover {
+  transform: translateY(-1px);
+}
+
+.action-button:hover {
+  background: #f0c99f;
+}
+
+.choice-button:hover {
+  border-color: #e6b787;
+  background: rgb(230 183 135 / 14%);
+}
+
+.action-button:focus-visible,
+.choice-button:focus-visible,
+.game-title:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.game-footer {
+  margin-top: 17px;
+}
+
+.footer-controls span {
+  padding-left: 4px;
+  color: #e6b787;
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 18px 12px;
+  }
+
+  .chapter-label {
+    font-size: 8px;
+  }
+
+  .scene {
+    min-height: min(680px, calc(100svh - 130px));
+  }
+
+  .dialogue-panel {
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    padding: 20px 18px;
+  }
+
+  .scene-caption {
+    top: 16px;
+    right: 16px;
+    left: 16px;
+    font-size: 8px;
+  }
+
+  .game-footer {
+    font-size: 7px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
