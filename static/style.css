@@ -20,6 +20,7 @@ body {
   display: grid;
   place-items: center;
   padding: 32px 20px;
+  text-align: left;
   background:
     radial-gradient(ellipse at 50% 100%, rgb(100 71 94 / 18%), transparent 50%),
     #11121b;
@@ -27,6 +28,10 @@ body {
 
 button {
   font: inherit;
+}
+
+#story-content {
+  width: 100%;
 }
 
 .game-shell {
@@ -158,11 +163,17 @@ button {
   font-family: "Playfair Display", Georgia, serif;
   font-size: clamp(17px, 2.2vw, 22px);
   line-height: 1.65;
+  text-align: left;
+}
+
+#key-message {
+  text-align: left;
 }
 
 .scene-actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-start;
   gap: 10px;
 }
 
@@ -177,6 +188,7 @@ button {
   cursor: pointer;
   font-size: 12px;
   font-weight: 700;
+  text-align: left;
   transition: background-color 150ms ease, transform 150ms ease;
 }
 
