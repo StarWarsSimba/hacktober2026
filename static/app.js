@@ -9,18 +9,62 @@ textInput.addEventListener("input", () => {
   textOutput.textContent = textInput.value || "Your text will appear here.";
 });
 
-// Edit this array to set the dialogue and the order it appears in.
+// Add choices to a dialogue entry to pause progression and let the player choose a path.
 const dialogueMessages = [
-  "The journey begins.",
-  "A new path opens ahead.",
-  "The story continues..."
+  { text: "The journey begins.", next: 1 },
+  {
+    text: "A new path opens ahead. Which way will you go?",
+    choices: [
+      { text: "Follow the lights", next: 2 },
+      { text: "Enter the forest", next: 3 }
+    ]
+  },
+  { text: "The lights lead you toward a distant village.", next: 4 },
+  { text: "The forest path winds deeper into the unknown.", next: 4 },
+  { text: "The story continues..." }
 ];
 const keyMessage = document.querySelector("#key-message");
+const dialogueOptions = document.querySelector("#dialogue-options");
 let currentMessageIndex = 0;
 
-keyMessage.textContent = dialogueMessages[currentMessageIndex];
+function showDialogue() {
+  const message = dialogueMessages[currentMessageIndex];
+  keyMessage.textContent = message.text;
+  dialogueOptions.replaceChildren();
 
-// Advance the dialogue once for each key press, stopping at the final message.
+  if (message.choices) {
+    for (const choice of message.choices) {
+      const button = document.createElement("button");
+      button.className = "choice-button";
+      button.type = "button";
+      button.textContent = choice.text;
+      button.addEventListener("click", () => {
+        currentMessageIndex = choice.next;
+        showDialogue();
+      });
+      dialogueOptions.append(button);
+    }
+  } else if (message.next !== undefined) {
+    const button = document.createElement("button");
+    button.className = "action-button";
+    button.type = "button";
+    button.textContent = "Continue";
+    button.addEventListener("click", advanceDialogue);
+    dialogueOptions.append(button);
+  }
+}
+
+function advanceDialogue() {
+  const message = dialogueMessages[currentMessageIndex];
+  if (message.next !== undefined) {
+    currentMessageIndex = message.next;
+    showDialogue();
+  }
+}
+
+showDialogue();
+
+// Advance ordinary dialogue with a key press; questions wait for a choice.
 document.addEventListener("keydown", (event) => {
   const target = event.target;
   const isFormControl = target instanceof HTMLElement &&
@@ -32,9 +76,8 @@ document.addEventListener("keydown", (event) => {
     return;
   }
 
-  if (currentMessageIndex < dialogueMessages.length - 1) {
-    currentMessageIndex += 1;
-    keyMessage.textContent = dialogueMessages[currentMessageIndex];
+  if (!dialogueMessages[currentMessageIndex].choices) {
+    advanceDialogue();
   }
 });
 

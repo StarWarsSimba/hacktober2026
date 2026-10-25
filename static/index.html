@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Set the title shown in the browser tab. -->
     <title>Python + JavaScript</title>
+    <link rel="stylesheet" href="/style.css">
   </head>
   <body>
     <!-- Display the page heading. -->
@@ -19,6 +20,8 @@
     <p id="text-output" aria-live="polite">Your text will appear here.</p>
     <!-- Show the current dialogue line; press a key to advance. -->
     <p id="key-message" aria-live="polite"></p>
+    <!-- Dialogue choices appear here when the current line is a question. -->
+    <div id="dialogue-options" class="scene-actions" role="group" aria-label="Dialogue options"></div>
     <!-- Button to request a greeting from the Flask API. -->
     <button id="hello-button">Get a message</button>
     <!-- Display the greeting returned by the API. -->
