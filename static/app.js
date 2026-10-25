@@ -9,9 +9,33 @@ textInput.addEventListener("input", () => {
   textOutput.textContent = textInput.value || "Your text will appear here.";
 });
 
-// Show a message whenever a key is pressed.
+// Edit this array to set the dialogue and the order it appears in.
+const dialogueMessages = [
+  "The journey begins.",
+  "A new path opens ahead.",
+  "The story continues..."
+];
+const keyMessage = document.querySelector("#key-message");
+let currentMessageIndex = 0;
+
+keyMessage.textContent = dialogueMessages[currentMessageIndex];
+
+// Advance the dialogue once for each key press, stopping at the final message.
 document.addEventListener("keydown", (event) => {
-  document.querySelector("#key-message").textContent = `You pressed: ${event.key}`;
+  const target = event.target;
+  const isFormControl = target instanceof HTMLElement &&
+    (target.isContentEditable || target.closest("input, textarea, select, button"));
+  const isModifierKey = ["Alt", "Control", "Meta", "Shift"].includes(event.key);
+
+  if (event.repeat || event.ctrlKey || event.metaKey || event.altKey ||
+      isModifierKey || isFormControl) {
+    return;
+  }
+
+  if (currentMessageIndex < dialogueMessages.length - 1) {
+    currentMessageIndex += 1;
+    keyMessage.textContent = dialogueMessages[currentMessageIndex];
+  }
 });
 
 // When clicked, request the greeting from the Flask API.
