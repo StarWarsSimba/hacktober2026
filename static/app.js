@@ -47,7 +47,8 @@ const dialogueMessages = [
     next: 6
   },
   { text: "A familiar girl's voice fills my ears.", next: 7},
-  { text: "That girl is Aoi, my childhood friend.", next: 8}
+  { text: "That girl is Aoi, my childhood friend.", next: 8},
+  { text: "You know, that one friend that you've known since you were young?"}
 ];
 
 // Grab the elements that render the active dialogue state so we can update the
@@ -55,6 +56,7 @@ const dialogueMessages = [
 const keyMessage = document.querySelector("#key-message");
 const speakerName = document.querySelector("#speaker-name");
 const dialogueOptions = document.querySelector("#dialogue-options");
+const MAX_DIALOGUE_LINE_LENGTH = 70;
 
 // Track which message in the conversation is currently being shown.
 let currentMessageIndex = 0;
@@ -63,17 +65,62 @@ let messageRevealTimer;
 // Indicates whether the current line is still being revealed to the user.
 let isRevealingMessage = false;
 
+function wrapDialogueText(text) {
+  return text.split("\n").map((paragraph) => {
+    const lines = [];
+    let line = "";
+    let lineLength = 0;
+
+    for (const word of paragraph.trim().split(/\s+/).filter(Boolean)) {
+      const characters = Array.from(word);
+      const wordLength = characters.length;
+
+      if (lineLength > 0 && lineLength + 1 + wordLength > MAX_DIALOGUE_LINE_LENGTH) {
+        lines.push(line);
+        line = "";
+        lineLength = 0;
+      }
+
+      if (wordLength > MAX_DIALOGUE_LINE_LENGTH) {
+        if (line) {
+          lines.push(line);
+          line = "";
+          lineLength = 0;
+        }
+
+        for (let index = 0; index < wordLength; index += MAX_DIALOGUE_LINE_LENGTH) {
+          const segment = characters
+            .slice(index, index + MAX_DIALOGUE_LINE_LENGTH)
+            .join("");
+          if (index + MAX_DIALOGUE_LINE_LENGTH < wordLength) {
+            lines.push(segment);
+          } else {
+            line = segment;
+            lineLength = Array.from(segment).length;
+          }
+        }
+      } else {
+        line = line ? `${line} ${word}` : word;
+        lineLength += (lineLength > 0 ? 1 : 0) + wordLength;
+      }
+    }
+
+    lines.push(line);
+    return lines.join("\n");
+  }).join("\n");
+}
+
 // Render the current dialogue message and set up any button actions needed to
 // continue the story or branch to a different scene.
 function showDialogue() {
   // Pull the active message from the story array.
   const message = dialogueMessages[currentMessageIndex];
-  const messageText = typeof message.text === "function"
+  const rawMessageText = typeof message.text === "function"
     ? message.text(nameInput.value.trim())
     : message.text;
+  const messageText = wrapDialogueText(rawMessageText);
   // Show the speaker tag only when the line includes one.
   speakerName.textContent = message.speaker || "";
-  speakerName.hidden = !message.speaker;
   // Clear any previous text before revealing the next message.
   keyMessage.textContent = "";
   dialogueOptions.replaceChildren();

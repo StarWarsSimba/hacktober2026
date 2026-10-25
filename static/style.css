@@ -17,13 +17,18 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 32px 20px;
   text-align: left;
   background:
     radial-gradient(ellipse at 50% 100%, rgb(100 71 94 / 18%), transparent 50%),
     #11121b;
+}
+
+#name-form {
+  margin-block: auto;
 }
 
 button {
@@ -148,6 +153,7 @@ button {
 }
 
 .speaker-name {
+  min-height: 1.2em;
   margin: 0;
   color: #e6b787;
   font-size: 12px;
@@ -168,6 +174,7 @@ button {
 
 #key-message {
   text-align: left;
+  white-space: pre-line;
 }
 
 .scene-actions {
