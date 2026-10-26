@@ -10,7 +10,11 @@
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
-    <form id="name-form">
+    <section id="intro-screen" class="intro-screen" aria-label="Introduction">
+      <p id="intro-message" class="dialogue-text" aria-live="polite"></p>
+      <div id="intro-dialogue" class="scene-actions" role="group" aria-label="Introduction controls"></div>
+    </section>
+    <form id="name-form" hidden>
       <label for="name-input">Your name:</label>
       <input id="name-input" type="text" autocomplete="name" maxlength="40" required>
       <button type="submit">Start</button>

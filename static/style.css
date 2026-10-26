@@ -31,6 +31,15 @@ body {
   margin-block: auto;
 }
 
+.intro-screen {
+  width: min(100%, 640px);
+  margin-block: auto;
+}
+
+.intro-screen .dialogue-text {
+  margin: 0 0 22px;
+}
+
 button {
   font: inherit;
 }

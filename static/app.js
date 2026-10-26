@@ -5,6 +5,16 @@ const textOutput = document.querySelector("#text-output");
 const nameInput = document.querySelector("#name-input");
 const nameForm = document.querySelector("#name-form");
 const storyContent = document.querySelector("#story-content");
+const introScreen = document.querySelector("#intro-screen");
+const introMessage = document.querySelector("#intro-message");
+const introDialogue = document.querySelector("#intro-dialogue");
+
+const introMessages = [
+  "This game is inspired by Doki Doki Literature Club! by Dan Salvato, and was initially built during an 8-hour hackathon.",
+  "Please excuse my storywriting, this was made in under eight hours. Plus, writing is not my strong suit.",
+];
+let introMessageIndex = 0;
+let isIntroActive = true;
 
 // This block was left commented out because the page is currently using the
 // dialogue system instead of the simple live-preview behavior.
@@ -111,7 +121,24 @@ const dialogueMessages = [
   { text: "I let out a sigh.", next: 42},
   { text: "\"Fine, I can stay for a cupcake.\"", speaker: (name) => name, next: 43},
   { text: "\"Yes! Let's go!~\"", speaker: "Savori", next: 44},
-  { text: "Savori grabs me by the hand and pulls me out of the classroom and down the hallway.", next: 45}
+  {
+    text: "Savori grabs me by the hand and pulls me out of the classroom and down the hallway to an area of the school I rarely visit, stopping in front of a classroom door.",
+    next: 45
+  },
+  { text: "Savori swings open the door, full of energy.", next: 46},
+  { text: "\"Everyone, I brought a new member!\"", speaker: "Savori", next: 47},
+  { text: "\"Don't call me a new member-\"", speaker: (name) => name, next: 48},
+  {
+    text: "I take a look around the classroom. Aside from me and Savori, there are three girls here.",
+    next: 49
+  },
+  { text: "\"Welcome to the Programming Club. It's a pleasure to see a new face.\"", speaker: "Girl 1", next: 50},
+  { text: "\"Ugh, a boy? There goes the atmosphere.\"", speaker: "Girl 2", next: 51},
+  { text: (name) => `"Ah, ${name ? `${name}` : ""}! Welcome to the club!"`, speaker: "Girl 3", next: 52},
+  { text: "...", next: 53},
+  { text: "All words escape me in this moment. This club...", next: 54},
+  { text: "Is full of incredibly cute girls!!!", next: 55}
+
 ];
 
 // Grab the elements that render the active dialogue state so we can update the
@@ -276,6 +303,39 @@ function advanceDialogue() {
   }
 }
 
+function showIntroDialogue() {
+  introMessage.textContent = introMessages[introMessageIndex];
+  introDialogue.replaceChildren();
+
+  const button = document.createElement("button");
+  button.className = "action-button";
+  button.type = "button";
+  button.textContent = introMessageIndex === introMessages.length - 1
+    ? "Enter your name"
+    : "Continue";
+  button.addEventListener("click", advanceIntroDialogue);
+  introDialogue.append(button);
+}
+
+function advanceIntroDialogue() {
+  if (!isIntroActive) {
+    return;
+  }
+
+  introMessageIndex += 1;
+  if (introMessageIndex < introMessages.length) {
+    showIntroDialogue();
+    return;
+  }
+
+  isIntroActive = false;
+  introScreen.hidden = true;
+  nameForm.hidden = false;
+  nameInput.focus();
+}
+
+showIntroDialogue();
+
 // Reveal the story only after the player submits a non-empty name.
 nameForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -304,6 +364,11 @@ document.addEventListener("keydown", (event) => {
     return;
   }
 
+  if (isIntroActive) {
+    advanceIntroDialogue();
+    return;
+  }
+
   if (isRevealingMessage) {
     // If the current line is still typing out, trigger the skip button.
     const skipButton = dialogueOptions.querySelector(".action-button");
@@ -314,15 +379,18 @@ document.addEventListener("keydown", (event) => {
 });
 
 // Request the Flask backend greeting when the user clicks the button.
-document.querySelector("#hello-button").addEventListener("click", async () => {
-  // Fetch the JSON message from the Python API route.
-  const response = await fetch("/api/hello");
-  // If the response is not a successful HTTP status, stop and show the failure.
-  if (!response.ok) {
-    throw new Error("Could not get a message from the server");
-  }
+const helloButton = document.querySelector("#hello-button");
+if (helloButton) {
+  helloButton.addEventListener("click", async () => {
+    // Fetch the JSON message from the Python API route.
+    const response = await fetch("/api/hello");
+    // If the response is not a successful HTTP status, stop and show the failure.
+    if (!response.ok) {
+      throw new Error("Could not get a message from the server");
+    }
 
-  // Convert the response body to JavaScript and display the message in the page.
-  const data = await response.json();
-  document.querySelector("#message").textContent = data.message;
-});
+    // Convert the response body to JavaScript and display the message in the page.
+    const data = await response.json();
+    document.querySelector("#message").textContent = data.message;
+  });
+}
