@@ -48,7 +48,7 @@ const dialogueMessages = [
   //{ text: "... I guess you can stay here..."}
   { text: "The sun beams down my eyes through the window shades.", next: 1},
   { text: "I guess that it's the start of another day.", next: 2},
-  { text: "I take a look at my clock. It was 7:30. I guess that's what happens when I stay up past midnight.", next: 3},
+  { text: "I take a look at my clock. It was 7:30.", next: 3},
   { text: "It's funny, really. No matter how late I stay up, I always seem to wake up before school starts.", next: 4},
   { text: "I sit up and stretch my arms, when I notice that another person is in my room.", next: 5},
   {
