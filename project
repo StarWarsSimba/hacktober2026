@@ -5,7 +5,3 @@ my-project/
     ├── index.html
     ├── app.js
     ├── styles.css
-    └── assets/
-        ├── backgrounds/
-        ├── characters/
-        └── music/

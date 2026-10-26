@@ -175,6 +175,7 @@ const MAX_DIALOGUE_LINE_LENGTH = 70;
 
 // Track which message in the conversation is currently being shown.
 let currentMessageIndex = 0;
+let selectedChoice = null;
 // Stores the timer that reveals the dialogue text one character at a time.
 let messageRevealTimer;
 // Indicates whether the current line is still being revealed to the user.
@@ -278,6 +279,7 @@ function showDialogue() {
         button.type = "button";
         button.textContent = choice.text;
         button.addEventListener("click", () => {
+          selectedChoice = choice.text;
           // Jump to the selected branch and redraw the story from that point.
           currentMessageIndex = choice.next;
           showDialogue();
