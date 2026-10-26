@@ -38,17 +38,80 @@ const dialogueMessages = [
   //{ text: "... I guess you can stay here..."}
   { text: "The sun beams down my eyes through the window shades.", next: 1},
   { text: "I guess that it's the start of another day.", next: 2},
-  { text: "I take a look at my clock. '11:34'. I guess that's what happens when I stay up past midnight.", next: 3},
-  { text: "It's not like I want to wake up this late, but I just struggle to go to bed at a reasonable time. It's probably a motivation thing or whatever.", next: 4},
-  { text: "I wonder if there's anything that I can do today to make myself feel good about myself.", next: 5},
+  { text: "I take a look at my clock. It was 7:30. I guess that's what happens when I stay up past midnight.", next: 3},
+  { text: "It's funny, really. No matter how late I stay up, I always seem to wake up before school starts.", next: 4},
+  { text: "I sit up and stretch my arms, when I notice that another person is in my room.", next: 5},
   {
     text: (name) => `"Ah, you're awake${name ? `, ${name}` : ""}!"`,
     speaker: "???",
     next: 6
   },
   { text: "A familiar girl's voice fills my ears.", next: 7},
-  { text: "That girl is Aoi, my childhood friend.", next: 8},
-  { text: "You know, that one friend that you've known since you were young?"}
+  { text: "That girl is Savori, my childhood friend and nextdoor neighbor.", next: 8},
+  { text: "You know, that one friend that you've known since you were young?", next: 9},
+  {
+    text: "Since my parents are currently working overseas, Savori has been coming into my house to make sure I get out the door on time.",
+    next: 10
+  },
+  {
+    text: "While it is kind of embarrasing to have to rely on someone else to get ready for the day when I'm in my final year of highschool, I can't say that she hasn't saved me from being late a few times.",
+    next: 11
+  },
+  {
+    text: "\"You know, you should really start going to bed sooner. It's important that you do well in school.\"",
+    speaker: "Savori", next: 12
+  },
+  { text: "\"Sooner or later, all this staying up late might catch up to you.\"", speaker: "Savori", next: 12},
+  { text: "\"Can you promise me you'll try to be more responsible?\"", speaker: "Savori", next: 13},
+  { text: "I stood up and started walking toward my door, and let out a sigh.", next: 14},
+  {
+    text: "\"Alright, I'll try.\"",
+    speaker: (name) => name, next: 15
+  },
+  { text: "After eating breakfast (that Savori had made for me), we made our way out the door and walked to school", next: 16},
+  { text: "\"So, have you given any thought to joining a club yet?\"", speaker: "Savori", next: 17},
+  { text: "\"A club?\"", speaker: (name) => name, next: 18},
+  {
+    text: "\"Yes, a club! Remember you told me last year that you would join a club, but you didn't want to because it was during the middle of the school year already?\"",
+    speaker: "Savori", next: 19
+  },
+  { text: "\"Did I say that...?\"", speaker: (name) => name, next: 20},
+  { text: "There's a good chance I said that just to make Savori stop worrying about me.", next: 21},
+  {
+    text: "I would have felt weird about joining a club in the middle of the school year. Everyone else would already know what they were doing, and I wouldn't have wanted to drag them down.",
+    next: 22
+  },
+  {
+    text: "\"Yes! Clubs are an integral part of youth. If you don't join a club, you're in danger of becoming a NEET!\"",
+    speaker: "Savori", next: 23
+  },
+  { text: "\"Just promise me you'll check out some clubs today?\"", speaker: "Savori", next: 24},
+  { text: "\"Alright, I promise\"", speaker: (name) => name, next: 25},
+  { text: "\"Thanks!~\"", speaker: "Savori", next: 26},
+  { text: "The school day was the same as it always was, and before I knew it, the day was over.", next: 27},
+  { text: (name) => `"${name ? `, ${name}` : ""}?"`, speaker: "Savori", next: 28},
+  { text: "Savori must have come into the classroom I was in while I was spacing out.", next: 29},
+  { text: "\"Savori? What are you doing? Aren't you usually busy after school?\"", speaker: (name) => name, next: 30},
+  { text: "\"Well, yeah, but I thought you might need some help choosing a club.\"", speaker: "Savori", next: 31},
+  { text: "\"Why do you care so much about me joining a club?\"", speaker: (name) => name, next: 32},
+  { text: "\"I just thought, y'know... maybe you could come to my club!\"", speaker: "Savori", next: 33},
+  { text: "\"You can't be serious...\"", speaker: (name) => name, next: 34},
+  { text: "Savori is the vice president of the Programming Club.", next: 35},
+  {
+    text: "I've never really considered myself much of a programmer, but I've take coding classes for a few years and it's been enjoyable.",
+    next: 36
+  },
+  { text: "\"It's no big deal if you join! Everyone's really friendly!\"", speaker: "Savori", next: 37},
+  {
+    text: "\"Plus, I kinda already told them I would bring in a new member, and Natsuko already made cupcakes and everything...\"",
+    speaker: "Savori", next: 38
+  },
+  { text: "\"Don't make a promise you can't keep!\"", speaker: (name) => name, next: 39},
+  { text: "\"Come on, will you at least come to this meeting?\"", speaker: "Savori", next: 40},
+  { text: "I let out a sigh.", next: 41},
+  { text: "\"Fine, I can stay for a cupcake.\"", speaker: (name) => name, next: 41},
+  { text: "\"Yes! Let's go!~\"", speaker: "Savori", next: 42},
+  { text: "Savori grabs me by the hand and pulls me out of the classroom and down the hallway.", next: 43}
 ];
 
 // Grab the elements that render the active dialogue state so we can update the
@@ -119,8 +182,11 @@ function showDialogue() {
     ? message.text(nameInput.value.trim())
     : message.text;
   const messageText = wrapDialogueText(rawMessageText);
+  const rawSpeakerName = typeof message.speaker === "function"
+    ? message.speaker(nameInput.value.trim())
+    : message.speaker;
   // Show the speaker tag only when the line includes one.
-  speakerName.textContent = message.speaker || "";
+  speakerName.textContent = rawSpeakerName || "";
   // Clear any previous text before revealing the next message.
   keyMessage.textContent = "";
   dialogueOptions.replaceChildren();
