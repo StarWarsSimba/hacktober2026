@@ -137,8 +137,33 @@ const dialogueMessages = [
   { text: (name) => `"Ah, ${name ? `${name}` : ""}! Welcome to the club!"`, speaker: "Girl 3", next: 52},
   { text: "...", next: 53},
   { text: "All words escape me in this moment. This club...", next: 54},
-  { text: "Is full of incredibly cute girls!!!", next: 55}
-
+  { text: "Is full of incredibly cute girls!!!", next: 55},
+  { text: "Pretend you just witnessed some more plot that I unfortunately had to leave out (for now) due to time constraints.", next: 56},
+  { text: "Minigame: pick words from here:",
+    choices: [
+      { text: "Hex", next: 57},
+      { text: "Assembler", next: 58},
+      { text: "C", next: 59},
+      { text: "Fortran", next: 60},
+      { text: "SQL", next: 61},
+      { text: "Python", next: 62},
+      { text: "Ruby", next: 63},
+      { text: "Java", next: 64},
+      { text: "C#", next: 65},
+      { text: "Javascript", next: 66}
+    ]
+  },
+  { text: "Holy unc dude", next: 67},
+  { text: "Baaalright", next: 67},
+  { text: "C deez nuts ahhhahahaha", next: 67},
+  { text: "Who are you gng", next: 67},
+  { text: "Yo I learned this one over the summer", next: 67},
+  { text: "🐍", next: 67},
+  { text: "I don't know this one", next: 67},
+  { text: "I learned this once a while ago", next: 67},
+  { text: "I haven't learned this one yet", next: 67},
+  { text: "One of the programming languages of all time", next: 67},
+  { text: "Thanks for playing I guess"}
 ];
 
 // Grab the elements that render the active dialogue state so we can update the
